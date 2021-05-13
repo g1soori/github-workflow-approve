@@ -1,9 +1,10 @@
 name: CD
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   test_job:
@@ -22,14 +23,14 @@ jobs:
 
       - 
         name: "Merge pull request"
-        if: >
-          ${{ success() }} &&
-          github.event_name == 'pull_request' &&
-          github.event.pull_request.draft == false && (
-            github.event.action == 'opened' ||
-            github.event.action == 'reopened' ||
-            github.event.action == 'synchronize'
-          ) 
+        # if: >
+        #   ${{ success() }} &&
+        #   github.event_name == 'pull_request' &&
+        #   github.event.pull_request.draft == false && (
+        #     github.event.action == 'opened' ||
+        #     github.event.action == 'reopened' ||
+        #     github.event.action == 'synchronize'
+        #   ) 
         uses: "actions/github-script@v2"
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
