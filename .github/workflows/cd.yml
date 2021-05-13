@@ -12,9 +12,14 @@ jobs:
     if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest')
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    
+    outputs:
+      test_jon_ouput: ${{ steps.run-step.outcome }}
+    
     steps:
       -
         name: hostname
+        id: run-step
         run: hostname
 
   merge:
@@ -25,7 +30,8 @@ jobs:
     needs: test_job
 
     if: >
-      ${{ success() }} &&
+      contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest') &&
+      needs.test_job.outputs.test_jon_ouput == 'success' &&
       github.event_name == 'pull_request' &&
       github.event.pull_request.draft == false && (
         github.event.action == 'opened' ||
@@ -45,7 +51,6 @@ jobs:
             await github.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
-              pull_number: pullRequest.number,
               repo: repository.repo,
             })
 #
