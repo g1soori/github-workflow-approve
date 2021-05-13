@@ -22,16 +22,24 @@ jobs:
         id: run-step
         run: hostname
 
-      - 
-        name: "Merge pull request"
-        if: >
-          ${{ success() }} &&
-          github.event_name == 'pull_request' &&
-          github.event.pull_request.draft == false && (
-            github.event.action == 'opened' ||
-            github.event.action == 'reopened' ||
-            github.event.action == 'synchronize'
-          ) 
+
+  merge:
+    name: "Merge"
+
+    runs-on: "ubuntu-latest"
+
+    needs: test_job
+
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.draft == false && (
+        github.event.action == 'opened' ||
+        github.event.action == 'reopened' ||
+        github.event.action == 'synchronize'
+      ) 
+
+    steps:
+      - name: "Merge pull request"
         uses: "actions/github-script@v2"
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
@@ -42,38 +50,5 @@ jobs:
             await github.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
-              pull_number: pullRequest.number,
               repo: repository.repo,
             })
-
-  # merge:
-  #   name: "Merge"
-
-  #   runs-on: "ubuntu-latest"
-
-  #   needs: test_job
-
-  #   if: >
-  #     contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest') &&
-  #     needs.test_job.outputs.test_jon_ouput == 'success' &&
-  #     github.event_name == 'pull_request' &&
-  #     github.event.pull_request.draft == false && (
-  #       github.event.action == 'opened' ||
-  #       github.event.action == 'reopened' ||
-  #       github.event.action == 'synchronize'
-  #     ) 
-
-  #   steps:
-      # - name: "Merge pull request"
-      #   uses: "actions/github-script@v2"
-      #   with:
-      #     github-token: "${{ secrets.GITHUB_TOKEN }}"
-      #     script: |
-      #       const pullRequest = context.payload.pull_request
-      #       const repository = context.repo
-
-      #       await github.pulls.merge({
-      #         merge_method: "merge",
-      #         owner: repository.owner,
-      #         repo: repository.repo,
-      #       })
