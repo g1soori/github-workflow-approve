@@ -51,7 +51,6 @@ jobs:
             await github.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
-              pull_number: pullRequest.number,
               repo: repository.repo,
             })
 #
