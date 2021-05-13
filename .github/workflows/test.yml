@@ -23,9 +23,9 @@ jobs:
 
       - 
         name: automerge
-          uses: "pascalgn/automerge-action@v0.14.1"
-          env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        uses: "pascalgn/automerge-action@v0.14.1"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   
 
   # merge:
@@ -59,3 +59,4 @@ jobs:
       #         owner: repository.owner,
       #         repo: repository.repo,
       #       })
+#
