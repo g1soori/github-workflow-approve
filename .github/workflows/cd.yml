@@ -1,11 +1,12 @@
 
 name: CI
 
+
 on:
-  pull_request:
-    types: [opened]
-  issue_comment:
-    types: [created, edited, deleted]
+  push:
+    branches:
+      - master
+
 
 jobs:
   test_job:
