@@ -30,6 +30,7 @@ jobs:
     needs: test_job
 
     if: >
+      contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest') &&
       needs.test_job.outputs.test_jon_ouput == 'success' &&
       github.event_name == 'pull_request' &&
       github.event.pull_request.draft == false && (
