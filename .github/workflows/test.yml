@@ -22,28 +22,11 @@ jobs:
         run: hostname
 
       - 
-        name: "Merge pull request"
-        # if: >
-        #   ${{ success() }} &&
-        #   github.event_name == 'pull_request' &&
-        #   github.event.pull_request.draft == false && (
-        #     github.event.action == 'opened' ||
-        #     github.event.action == 'reopened' ||
-        #     github.event.action == 'synchronize'
-        #   ) 
-        uses: "actions/github-script@v2"
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          script: |
-            const pullRequest = context.payload.pull_request
-            const repository = context.repo
-
-            await github.pulls.merge({
-              merge_method: "merge",
-              owner: repository.owner,
-              pull_number: pullRequest.number,
-              repo: repository.repo,
-            })
+        name: automerge
+          uses: "pascalgn/automerge-action@v0.14.1"
+          env:
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  
 
   # merge:
   #   name: "Merge"
