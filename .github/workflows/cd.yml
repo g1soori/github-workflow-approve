@@ -2,16 +2,15 @@
 name: CI
 
 on:
-  # pull_request:
-  #   types: [opened]
+  pull_request:
+    types: [opened]
   issue_comment:
-    types: [created]
+    types: [created, edited, deleted]
 
 jobs:
   test_job:
     # if: contains(github.event.comment.html_url, '/pull/')
-    # if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest')
-    if: contains(github.event.comment.body, 'commenttest')
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'commenttest')
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
