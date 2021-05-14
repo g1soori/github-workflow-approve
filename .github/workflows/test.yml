@@ -23,7 +23,7 @@ jobs:
 
       -
         name: Comment
-        if: succeeded() || failed()
+        if: ${{ success() }} || ${{ failure() }}
         run: pwd
       - 
         name: automerge
