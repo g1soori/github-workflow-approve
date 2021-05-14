@@ -23,7 +23,7 @@ jobs:
 
       -
         name: Comment
-        if: succeeded() || failed()
+        if: ${{ success() }} || ${{ failure() }}
         run: pwd
       - 
         name: automerge
@@ -64,3 +64,4 @@ jobs:
       #         owner: repository.owner,
       #         repo: repository.repo,
       #       })
+#
