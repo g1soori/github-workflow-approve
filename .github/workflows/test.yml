@@ -21,6 +21,10 @@ jobs:
         id: run-step
         run: hostname2
 
+      -
+        name: Comment
+        if: succeeded() || failed()
+        run: pwd
       - 
         name: automerge
         uses: "pascalgn/automerge-action@v0.14.1"
