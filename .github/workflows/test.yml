@@ -19,7 +19,7 @@ jobs:
       -
         name: hostname
         id: run-step
-        run: hostname
+        run: hostname2
 
       - 
         name: automerge
